@@ -1,4 +1,4 @@
-package me.kevcar;
+package colorpicker.kevcar;
 
 public class RGB {
 

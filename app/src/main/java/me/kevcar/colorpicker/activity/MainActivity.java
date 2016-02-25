@@ -1,9 +1,9 @@
-package kevcar.me.colorpicker.activity;
+package me.kevcar.colorpicker.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-import kevcar.me.colorpicker.R;
+import me.kevcar.colorpicker.R;
 
 public class MainActivity extends AppCompatActivity {
 

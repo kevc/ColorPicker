@@ -1,4 +1,4 @@
-package kevcar.me.colorpicker.view;
+package me.kevcar.colorpicker.view;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -7,8 +7,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
-import kevcar.me.colorpicker.R;
-import me.kevcar.RGB;
+import colorpicker.kevcar.RGB;
+import me.kevcar.colorpicker.R;
 
 public class ColorPickerView extends LinearLayout {
 
@@ -25,9 +25,9 @@ public class ColorPickerView extends LinearLayout {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             RGB.Builder builder = new RGB.Builder()
-                                        .setRed(red.getProgress())
-                                        .setGreen(green.getProgress())
-                                        .setBlue(blue.getProgress());
+                    .setRed(red.getProgress())
+                    .setGreen(green.getProgress())
+                    .setBlue(blue.getProgress());
             setColor(builder.build());
         }
 

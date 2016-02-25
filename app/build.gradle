@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "kevcar.me.colorpicker"
+        applicationId "me.kevcar.colorpicker"
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
