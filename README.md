@@ -9,5 +9,5 @@ A sample Android app for conceptual framework examples.
 ### mvi - Introduces RxBinding and a presentation layer
 [mvi](https://github.com/kevc/ColorPicker/tree/mvi)
 
-### mvi-anntoations - Introduces `plumb`, a little module for connecting sinks and sources
+### mvi-annotations - Introduces `plumb`, a little module for connecting sinks and sources
 [mvi-annotations](https://github.com/kevc/ColorPicker/tree/mvi-annotations)
