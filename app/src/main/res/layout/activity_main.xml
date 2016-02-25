@@ -18,8 +18,10 @@
         tools:src="#FFFF00" />
 
     <LinearLayout
+        android:id="@+id/red_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/target"
         android:layout_marginTop="32dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -38,8 +40,10 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/green_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/red_container"
         android:layout_marginTop="32dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -58,8 +62,10 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/blue_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/green_container"
         android:layout_marginTop="32dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
