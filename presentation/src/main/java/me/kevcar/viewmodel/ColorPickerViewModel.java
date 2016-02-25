@@ -1,15 +1,21 @@
 package me.kevcar.viewmodel;
 
+import me.kevcar.Sink;
+import me.kevcar.Source;
 import me.kevcar.model.RGB;
 import rx.Subscriber;
 import rx.subjects.BehaviorSubject;
 
 public class ColorPickerViewModel {
 
-    // Sinks (write)
+    // Sources
 
+    @Source("RGB")
     public BehaviorSubject<RGB> rgbSubject = BehaviorSubject.create(new RGB(0, 0, 0));
 
+    // Sinks (write)
+
+    @Sink("RED")
     public Subscriber<Integer> redSubscriber = new BaseSubscriber() {
         @Override
         public void onNext(Integer integer) {
@@ -21,6 +27,7 @@ public class ColorPickerViewModel {
         }
     };
 
+    @Sink("GREEN")
     public Subscriber<Integer> greenSubscriber = new BaseSubscriber() {
         @Override
         public void onNext(Integer integer) {
@@ -32,6 +39,7 @@ public class ColorPickerViewModel {
         }
     };
 
+    @Sink("BLUE")
     public Subscriber<Integer> blueSubscriber = new BaseSubscriber() {
         @Override
         public void onNext(Integer integer) {

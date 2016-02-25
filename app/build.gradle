@@ -25,5 +25,6 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
     compile project(path: ':model')
     compile project(path: ':presentation')
+    compile project(path: ':plumb')
     testCompile 'junit:junit:4.12'
 }

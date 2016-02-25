@@ -4,4 +4,5 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(path: ':model')
     compile 'io.reactivex:rxjava:1.1.0'
+    compile project(path: ':plumb')
 }
