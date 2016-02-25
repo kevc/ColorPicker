@@ -67,8 +67,8 @@ public class ColorPickerView extends RelativeLayout {
 
     @Override
     public void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
         subscriptions.clear();
+        super.onDetachedFromWindow();
     }
 
     // Sink implementations
