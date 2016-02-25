@@ -9,10 +9,14 @@ import android.widget.SeekBar;
 
 import com.jakewharton.rxbinding.widget.RxSeekBar;
 
+import me.kevcar.Plumb;
+import me.kevcar.Sink;
+import me.kevcar.Source;
 import me.kevcar.colorpicker.R;
 import me.kevcar.model.RGB;
 import me.kevcar.viewmodel.ColorPickerViewModel;
-import rx.functions.Action1;
+import rx.Observable;
+import rx.Observer;
 import rx.subscriptions.CompositeSubscription;
 
 public class ColorPickerView extends RelativeLayout {
@@ -27,6 +31,15 @@ public class ColorPickerView extends RelativeLayout {
     private SeekBar red;
     private SeekBar green;
     private SeekBar blue;
+
+    @Source("RED")
+    Observable<Integer> redChanges;
+
+    @Source("GREEN")
+    Observable<Integer> greenChanges;
+
+    @Source("BLUE")
+    Observable<Integer> blueChanges;
 
     // Subscriptions
 
@@ -56,26 +69,35 @@ public class ColorPickerView extends RelativeLayout {
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        // Sources
-        subscriptions.add(RxSeekBar.changes(red).subscribe(viewModel.redSubscriber));
-        subscriptions.add(RxSeekBar.changes(green).subscribe(viewModel.greenSubscriber));
-        subscriptions.add(RxSeekBar.changes(blue).subscribe(viewModel.blueSubscriber));
 
-        // Sinks
-        subscriptions.add(viewModel.rgbSubject.subscribe(rgbOnNext));
+        redChanges = RxSeekBar.changes(red);
+        greenChanges = RxSeekBar.changes(green);
+        blueChanges = RxSeekBar.changes(blue);
+
+        subscriptions.add(Plumb.join(this, viewModel));
     }
 
     @Override
     public void onDetachedFromWindow() {
-        subscriptions.clear();
         super.onDetachedFromWindow();
+        subscriptions.clear();
     }
 
     // Sink implementations
-
-    private Action1<RGB> rgbOnNext = new Action1<RGB>() {
+    @Sink("RGB")
+    Observer<RGB> rgbOnNext = new Observer<RGB>() {
         @Override
-        public void call(RGB rgb) {
+        public void onCompleted() {
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onNext(RGB rgb) {
             int color = Color.rgb(rgb.getRed(), rgb.getGreen(), rgb.getBlue());
             target.setBackgroundColor(color);
         }
