@@ -4,10 +4,10 @@ A sample Android app for conceptual framework examples.
 ## Current branches
 
 ### master - Typical imperative structure
-[https://github.com/kevc/ColorPicker](master)
+[master](https://github.com/kevc/ColorPicker)
 
 ### mvi - Introduces RxBinding and a presentation layer
-[https://github.com/kevc/ColorPicker/tree/mvi](mvi)
+[mvi](https://github.com/kevc/ColorPicker/tree/mvi)
 
 ### mvi-anntoations - Introduces `plumb`, a little module for connecting sinks and sources
-[https://github.com/kevc/ColorPicker/tree/mvi-annotations](mvi-annotations)
+[mvi-annotations](https://github.com/kevc/ColorPicker/tree/mvi-annotations)
