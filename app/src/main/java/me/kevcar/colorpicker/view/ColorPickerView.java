@@ -4,43 +4,33 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
-import colorpicker.kevcar.RGB;
+import com.jakewharton.rxbinding.widget.RxSeekBar;
+
 import me.kevcar.colorpicker.R;
+import me.kevcar.model.RGB;
+import me.kevcar.viewmodel.ColorPickerViewModel;
+import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
 
-public class ColorPickerView extends LinearLayout {
+public class ColorPickerView extends RelativeLayout {
 
-    // Cached views
+    // ViewModel
+
+    private ColorPickerViewModel viewModel = new ColorPickerViewModel();
+
+    // Views
 
     private ImageView target;
     private SeekBar red;
     private SeekBar green;
     private SeekBar blue;
 
-    // Members
+    // Subscriptions
 
-    private SeekBar.OnSeekBarChangeListener listener = new SeekBar.OnSeekBarChangeListener() {
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            RGB.Builder builder = new RGB.Builder()
-                    .setRed(red.getProgress())
-                    .setGreen(green.getProgress())
-                    .setBlue(blue.getProgress());
-            setColor(builder.build());
-        }
-
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-            // no-op
-        }
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-            // no-op
-        }
-    };
+    private CompositeSubscription subscriptions = new CompositeSubscription();
 
     // Constructor
 
@@ -61,22 +51,33 @@ public class ColorPickerView extends LinearLayout {
         red = (SeekBar) findViewById(R.id.red);
         green = (SeekBar) findViewById(R.id.green);
         blue = (SeekBar) findViewById(R.id.blue);
-
-        // Set listener
-        red.setOnSeekBarChangeListener(listener);
-        green.setOnSeekBarChangeListener(listener);
-        blue.setOnSeekBarChangeListener(listener);
-
-        // Set initial progress
-        red.setProgress(0);
-        green.setProgress(0);
-        blue.setProgress(0);
     }
 
-    // Private
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        // Sources
+        subscriptions.add(RxSeekBar.changes(red).subscribe(viewModel.redSubscriber));
+        subscriptions.add(RxSeekBar.changes(green).subscribe(viewModel.greenSubscriber));
+        subscriptions.add(RxSeekBar.changes(blue).subscribe(viewModel.blueSubscriber));
 
-    private void setColor(RGB rgb) {
-        int color = Color.rgb(rgb.getRed(), rgb.getGreen(), rgb.getBlue());
-        target.setBackgroundColor(color);
+        // Sinks
+        subscriptions.add(viewModel.rgbSubject.subscribe(rgbOnNext));
     }
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        subscriptions.clear();
+    }
+
+    // Sink implementations
+
+    private Action1<RGB> rgbOnNext = new Action1<RGB>() {
+        @Override
+        public void call(RGB rgb) {
+            int color = Color.rgb(rgb.getRed(), rgb.getGreen(), rgb.getBlue());
+            target.setBackgroundColor(color);
+        }
+    };
 }
