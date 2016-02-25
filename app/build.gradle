@@ -24,5 +24,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
     compile project(path: ':model')
+    compile project(path: ':presentation')
     testCompile 'junit:junit:4.12'
 }
